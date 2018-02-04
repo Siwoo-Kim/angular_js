@@ -19,13 +19,13 @@ angular.module('cart',[])   //First argument is the name of the module you want 
 
                 for(var i=0; i< cartData.length; i++){
                     if(cartData[i].id == id){
-                        cartData[i].count++;
+                        cartData[i].count++;            //if the same product id exists in the cart, add count by 1
                         addedToExistingItem = true;
                         break;
                     }
                 }
 
-                if(!addedToExistingItem){           // add only the product which cart doesn't contain
+                if(!addedToExistingItem){
                     cartData.push({
                         count : 1, id : id, price : price, name: name
                     });
@@ -45,5 +45,58 @@ angular.module('cart',[])   //First argument is the name of the module you want 
                 return cartData;
             }
         }
-
     })
+    .directive('cartSummary',function (cart) {
+        // directive( [ directiveName ] , [ factoryFunction() ] )
+        return {
+            restrict : 'E', // specify what kind of type will adjust directive to. 'E' is Element(Html Element), 'EA' is Element and Html Attribute
+            templateUrl : '/angularjs/components/carts/cartSummary.html',
+            controller: function ($scope) {
+
+                var cartData = cart.getProducts();
+
+                $scope.total = function () {
+                    var total = 0;
+                    for(var i=0; i< cartData.length; i++){
+                        total += (cartData[i].price * cartData[i].count); // price * count(amount) is the total price of one product
+                    }
+                    return total;
+                }
+
+                $scope.itemCount = function () {
+                    var total = 0;
+                    for( var i=0; i< cartData.length ; i++){
+                        total += cartData[i].count;
+                    }
+
+                    return total;
+                }
+            }
+        }
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
