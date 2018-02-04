@@ -1,0 +1,27 @@
+
+<div class="jumbotron row" ng-controller="productListCtrl" ng-hide="data.error">
+    <div class="col-4">
+        <a ng-click="selectCategory()" class="btn btn-secondary" style="width: 100%;margin-bottom: 5px">Home</a>
+        <a ng-repeat="item in data.products | orderBy : 'category' | unique : 'category'"
+           ng-click="selectCategory(item)"
+           class="btn" ng-class="getCategoryClass(item)" style="width: 100%;margin-bottom: 5px">{{item}}</a>
+    </div>
+    <div class="col-8">
+        <div class="card" ng-repeat="item in data.products | filter : categoryFilterFn | range : selectedPage:pageSize "
+             style="margin-bottom: 15px">
+            <h3 class="card-title">
+                <strong>{{item.name}}</strong>
+                <span class="pull-right badge badge-primary">
+                        {{item.price | currency }}
+                    </span>
+            </h3>
+            <span class="lead">{{item.description}}</span>
+        </div>
+        <div class="pull-right btn-group">
+            <a ng-repeat="page in data.products | filter : categoryFilterFn | pageCount : pageSize"
+               ng-click="selectPage($index + 1)" class="btn" ng-class="getPageClass($index + 1)">
+                {{$index + 1}}
+            </a>
+        </div>
+    </div>
+</div>
