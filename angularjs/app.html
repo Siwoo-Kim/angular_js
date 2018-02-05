@@ -23,6 +23,14 @@
                 // Config routes
                 // $routerProvider.when( [path] , [urlObject] )
                 // "when" mehtod will map url-path to view
+                $routeProvider.when('/complete',{
+                    templateUrl : '/views/thankYou.html'
+                });
+
+                $routeProvider.when('/placeorder',{
+                    templateUrl : '/views/placeOrder.html'
+                });
+
                 $routeProvider.when("/checkout", {
                     templateUrl: 'views/checkoutSummary.html'
                 });
@@ -36,9 +44,13 @@
 
             })
     </script>
+    <!--controller goes here-->
     <script src="controllers/sportsStore.js" ></script>
-    <script src="filters/customFilters.js"></script>
+    <script src="controllers/checkoutControllers.js"></script>
     <script src="controllers/productListControllers.js" ></script>
+    <!--filters goes here-->
+    <script src="filters/customFilters.js"></script>
+    <!--components goes here-->
     <script src="components/carts/cart.js"></script> <!-- CartSummary Directive and Cart Service !-->
 
     <!--  import router module  -->

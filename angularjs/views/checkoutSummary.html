@@ -1,5 +1,57 @@
 
-<div class="lead">
-    This is the checkout summary view
+
+<h2>Your cart</h2>
+    <!--ng-controller directive specify the controller -->
+<div ng-controller="cartSummaryController" >
+        <!-- now the scope is for the cartSummaryController -->
+                                    <!-- ng-show same with *ngIf -->
+    <div class="alert alert-warning" ng-show="cartData.length == 0">
+        <!--Only show the element when the cart is empty-->
+        There are no products in your shopping cart.
+        <a href="#!/products" class="alert-link">Click here to return to the catalogue</a>
+    </div>
+
+            <!--ng-hide same with *ngIf-->
+    <div ng-hide="cartData.length == 0">
+        <!--Only hide the element when the cart is empty-->
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Quantity</th>
+                    <th>Item</th>
+                    <th class="text-right">Price</th>
+                    <th class="text-right">Subtotal</th>
+                    <th class="text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--ng-repeat same with *ngFor="element of elements"-->
+                <tr ng-repeat="item in cartData">
+                    <td class="text-center">{{item.count}}</td>
+                    <td class="text-left">{{item.name}}</td>
+                    <td class="text-right">{{item.price | currency}}</td>
+                    <td class="text-right">{{item.price * item.count}}</td>
+                    <td>
+                                <!--(click)="eventHandler()"-->
+                        <button ng-click="remove(item.id)" class="btn btn-sm btn-warning">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                        <!--td colspan attribute holds the number of cells-->
+                    <td colspan="3" class="text-right">Total:</td>
+                    <td class="text-right">
+                        {{ total() | currency }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="text-center">
+            <a class="btn btn-primary" href="#!/products" >Continue shopping</a>
+            <a class="btn btn-primary" href="#!/placeorder" >Place order now</a>
+        </div>
+    </div>
 </div>
-<a href="#!/products" class="btn btn-primary">Back</a>
