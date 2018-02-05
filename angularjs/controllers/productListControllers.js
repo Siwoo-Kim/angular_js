@@ -4,9 +4,11 @@ angular.module('sportsStore')
     .constant('productListActiveClass','btn-primary')
     .constant('productListClass','btn-secondary')
     .controller('productListCtrl',function (
-        $scope, $filter
-        ,productListActiveClass,productListClass,
-        productLisgPageCount) {
+        $scope, $filter, cart,//add the dependency of the cart service
+        productListActiveClass,
+        productListClass,
+        productLisgPageCount
+    ) {
         var selectedCategory = null;
 
         $scope.selectedPage = 1;
@@ -31,5 +33,10 @@ angular.module('sportsStore')
 
         $scope.getCategoryClass = function (category) {
             return selectedCategory == category ? productListActiveClass : productListClass;
+        }
+
+        //expose the cart function to the view through scope
+        $scope.addProductToCart = function (product) {
+            cart.addProduct(product.id,product.name,product.price);
         }
     })

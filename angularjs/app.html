@@ -15,13 +15,34 @@
                         First argument is for module name
                         Second argument is array for elements of dependencies
                      */
-        angular.module("sportsStore",['customFilters','cart']);
+        angular.module("sportsStore",['customFilters','cart',
+                        "ngRoute" ])
+                    // declare router module
+            .config(function ($routeProvider) {
+            // config method is same with providers in Angular4
+                // Config routes
+                // $routerProvider.when( [path] , [urlObject] )
+                // "when" mehtod will map url-path to view
+                $routeProvider.when("/checkout", {
+                    templateUrl: 'views/checkoutSummary.html'
+                });
+
+                $routeProvider.when("/products", {
+                    templateUrl: 'views/productList.html'
+                });
+
+                // if the url does match any path above , router map view to below
+                $routeProvider.otherwise({ templateUrl : 'views/productList.html' });
+
+            })
     </script>
     <script src="controllers/sportsStore.js" ></script>
     <script src="filters/customFilters.js"></script>
     <script src="controllers/productListControllers.js" ></script>
     <script src="components/carts/cart.js"></script> <!-- CartSummary Directive and Cart Service !-->
 
+    <!--  import router module  -->
+    <script src="ngmodules/angular-route.js"></script>
 </head>
 <body ng-controller="sportsStoreCtrl">
     <nav class="navbar justify-content-center" style="background-color: lightblue">
@@ -34,7 +55,14 @@
         <a href="/angularjs/app.html" class="alret-link">Click here to try again</a>
     </div>
 
-    <ng-include src="'views/productList.html'"></ng-include>  <!-- Separating the portion of view file !-->
+
+            <!--
+            Because we use router module, we does not need to include view anymore
+            <ng-include src="'views/productList.html'"></ng-include>  &lt;!&ndash; Separating the portion of view file !&ndash;&gt;
+            -->
+    <!-- location of the view rendering position by router -->
+    <ng-view />
+        <!-- same with <router-outlet>-->
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
